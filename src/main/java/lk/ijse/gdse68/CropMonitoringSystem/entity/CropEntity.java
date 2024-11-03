@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -15,12 +16,18 @@ import java.util.List;
 public class CropEntity implements SuperEntity{
     @Id
     private String cropCode;
-    private String cropCommonName;
-    private String cropScientificName;
+    private String commonName;
+    private String scientificName;
+
     @Column(columnDefinition = "LONGTEXT")
-    private String cropImage;
+    private String image;
     private String category;
     private String cropSeason;
-    @ManyToOne(mappedBy = "Field")
-    private List<FieldEntity> field;
+
+    @ManyToOne
+    @JoinColumn(name = "fieldCode")
+    private FieldEntity field;
+
+    @OneToMany(mappedBy = "crop")
+    private List<MonitoringLogEntity> cropDetailsEntities;
 }
