@@ -1,9 +1,6 @@
 package lk.ijse.gdse68.CropMonitoringSystem.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,16 +17,16 @@ public class FieldEntity implements SuperEntity{
     @Id
     private String fieldCode;
     private String fieldName;
-    private Point fieldLocation;
-    private Double extentSizeOfTheField;
+    private Double extentSize;
+    private String fieldLocation;
+
+    @OneToMany(mappedBy = "field")
     private List<CropEntity> crops;
-    private String staff;
-    @Column(columnDefinition = "LONGTEXT")
-    private String fieldImage1;
-    @Column(columnDefinition = "LONGTEXT")
-    private String fieldImage2;
 
-
-
+    @ManyToMany
+    @JoinTable(name = "fieldStaffDetails",
+            joinColumns = @JoinColumn(name = "fieldCode"),
+            inverseJoinColumns = @JoinColumn(name = "staffId"))
+    private List<StaffEntity> staff;
 
 }
