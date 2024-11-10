@@ -1,5 +1,6 @@
-package lk.ijse.gdse68.CropMonitoringSystem.CustomObj;
+package lk.ijse.gdse68.CropMonitoringSystem.CustomObj.Impl;
 
+import lk.ijse.gdse68.CropMonitoringSystem.CustomObj.FieldResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
