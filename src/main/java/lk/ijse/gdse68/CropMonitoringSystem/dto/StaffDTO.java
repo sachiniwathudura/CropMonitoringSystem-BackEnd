@@ -19,6 +19,7 @@ public class StaffDTO implements SuperDTO, StaffResponse {
     private String firstName;
     private String lastName;
     private String designation;
+    private String gender;
     private LocalDate joinDate;
     private LocalDate DOB;
     private String buildingNo;
