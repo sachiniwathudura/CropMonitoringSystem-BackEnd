@@ -9,8 +9,24 @@ public class AppUtil {
     public static String createCropId(){
         return "Crop- "+ UUID.randomUUID();
     }
+    public static String createFieldCode(){
+        return  "Field- "+ UUID.randomUUID();
+    }
+    public static String createEquipmentId(){
+        return "Equipment- "+ UUID.randomUUID();
+    }
 
+    public static String createMonitoringLogId(){
+        return "MLog- "+ UUID.randomUUID();
+    }
 
+    public static String createStaffId(){
+        return "Staff- "+ UUID.randomUUID();
+    }
+
+    public static String createVehicleCode(){
+        return  "Vehicle- "+ UUID.randomUUID();
+    }
     public static String toBase64ProfilePic(MultipartFile profilePic){
         String proPicBase64=null;
         try{
