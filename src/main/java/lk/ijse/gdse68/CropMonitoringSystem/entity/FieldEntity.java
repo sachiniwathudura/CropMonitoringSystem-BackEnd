@@ -18,15 +18,39 @@ public class FieldEntity implements SuperEntity{
     private String fieldCode;
     private String fieldName;
     private Double extentSize;
+
+    @Column(columnDefinition = "POINT")
     private String fieldLocation;
 
-    @OneToMany(mappedBy = "field")
+    @Column(columnDefinition = "LONGTEXT")
+    private String image1;  // Renamed from "fieldImage1"
+
+    @Column(columnDefinition = "LONGTEXT")
+    private String image2;  // Renamed from "fieldImage2"
+
+    @OneToMany(mappedBy = "field", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<CropEntity> crops;
 
+    @ManyToOne
+    @JoinColumn(name = "equipmentCode")
+    private EquipmentEntity field;
+
     @ManyToMany
-    @JoinTable(name = "fieldStaffDetails",
+    @JoinTable(
+            name = "field_staff_details",
             joinColumns = @JoinColumn(name = "fieldCode"),
-            inverseJoinColumns = @JoinColumn(name = "staffId"))
-    private List<StaffEntity> staff;
+            inverseJoinColumns = @JoinColumn(name = "staffId")
+    )
+    private List<StaffEntity> assignedStaff;
+
+//    @ManyToMany
+//    @JoinTable(
+//            name = "field_monitoeingLog",
+//            joinColumns = @JoinColumn(name = "fieldCode"),
+//            inverseJoinColumns = @JoinColumn(name = "logCode")
+//    )
+//    private List<MonitoringLogEntity> monitoringLogEntities;
+    @OneToMany(mappedBy = "field",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<MonitoringLogEntity>  monitoringLogEntity;
 
 }
