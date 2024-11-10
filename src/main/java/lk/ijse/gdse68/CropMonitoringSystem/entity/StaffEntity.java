@@ -19,6 +19,7 @@ public class StaffEntity implements SuperEntity{
     private String firstName;
     private String lastName;
     private String designation;
+    private String gender;
     private LocalDate joinDate;
     private LocalDate DOB;
     private String buildingNo;
@@ -29,10 +30,20 @@ public class StaffEntity implements SuperEntity{
     private String contactNo;
     private String email;
 
-    @ManyToMany(mappedBy = "staff")
-    private List<FieldEntity> fields;
+    @ManyToMany
+    @JoinTable(name = "staff_log",
+    joinColumns = @JoinColumn(name = "staffId"),inverseJoinColumns = @JoinColumn(name = "logCode"))
+    private List<MonitoringLogEntity> staffLogEntities;
 
-    @OneToOne
-    @JoinColumn(name = "vehicle_code") // Add JoinColumn annotation
-    private VehicleEntity allocatedVehicle;
+    @ManyToMany(mappedBy = "assignedStaff")
+    private List<FieldEntity> fieldEntities;
+
+    @ManyToOne
+    @JoinColumn(name ="equipmentCode")
+    private EquipmentEntity staff;
+
+    @ManyToOne
+    @JoinColumn(name = "vehicleCode")
+    private VehicleEntity vehicleEntity;
+
 }
