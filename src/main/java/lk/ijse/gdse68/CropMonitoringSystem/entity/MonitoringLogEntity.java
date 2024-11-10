@@ -6,28 +6,31 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "CropDetails")
+@Table(name = "MonitoringLog")
 public class MonitoringLogEntity implements SuperEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String logCode;
     private Date logDate;
+    @Column(columnDefinition = "TEXT")
     private String observationDetails;
+    @Column(columnDefinition = "LONGTEXT")
+    private String observedImage;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fieldCode")
     private FieldEntity field;
 
-    @ManyToOne
-    @JoinColumn(name = "cropCode")
-    private CropEntity crop;
+    @ManyToMany(mappedBy = "logEntities")
+    private List<CropEntity> cropEntities;
 
-    @ManyToOne
-    @JoinColumn(name = "staffId")
-    private StaffEntity staff;
+    @ManyToMany(mappedBy = "staffLogEntities")
+    private List<StaffEntity> staffEntities;
+
+
 }
