@@ -1,7 +1,7 @@
 package lk.ijse.gdse68.CropMonitoringSystem.service.Impl;
 
 import jakarta.transaction.Transactional;
-import lk.ijse.gdse68.CropMonitoringSystem.CustomObj.CropErrorResponse;
+import lk.ijse.gdse68.CropMonitoringSystem.CustomObj.Impl.CropErrorResponse;
 import lk.ijse.gdse68.CropMonitoringSystem.CustomObj.CropResponse;
 import lk.ijse.gdse68.CropMonitoringSystem.dao.CropDao;
 import lk.ijse.gdse68.CropMonitoringSystem.dto.CropDTO;
