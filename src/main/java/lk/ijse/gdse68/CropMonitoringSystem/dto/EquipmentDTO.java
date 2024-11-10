@@ -7,14 +7,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class EquipmentDTO implements SuperDTO, EquipmentServiceResponse {
-    private String EquipmentId;
+    private String equipmentCode;
     private String name;
     private String type;
     private String status;
-    private FieldEntity field;
-    private StaffEntity staff;
+    private List<String> staffIds; // List of assigned staff IDs
+    private List<String> fieldCodes;
 }
