@@ -38,4 +38,27 @@ public class AppUtil {
         }
         return proPicBase64;
     }
+
+    public static String toBase64ProfilePic(String img2) {
+        String proPicBase64=null;
+        try{
+            byte[] imageByteCollection= img2.getBytes();
+            proPicBase64= Base64.getEncoder().encodeToString(imageByteCollection);
+
+        }catch(Exception e ){
+            e.printStackTrace();
+        }
+        return proPicBase64;
+    }
+    public static String toBase64LogImg(String LogImg) {
+        String proPicBase64=null;
+        try{
+            byte[] imageByteCollection= LogImg.getBytes();
+            proPicBase64= Base64.getEncoder().encodeToString(imageByteCollection);
+
+        }catch(Exception e ){
+            e.printStackTrace();
+        }
+        return proPicBase64;
+    }
 }
