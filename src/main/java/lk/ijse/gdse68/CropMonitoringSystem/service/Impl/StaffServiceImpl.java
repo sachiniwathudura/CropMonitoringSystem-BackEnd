@@ -42,13 +42,12 @@ public class StaffServiceImpl implements StaffService {
         if(!tmpStaff.isPresent()){
             throw new StaffNotFoundException("Staff not found");
         }else{
-            // tmpStaff.get().setId(staffDto.getId());
             tmpStaff.get().setFirstName(staffDTO.getFirstName());
             tmpStaff.get().setLastName(staffDTO.getLastName());
             tmpStaff.get().setDesignation(staffDTO.getDesignation());
             tmpStaff.get().setGender(String.valueOf(Gender.valueOf(staffDTO.getGender())));
             tmpStaff.get().setJoinDate(staffDTO.getJoinDate());
-            tmpStaff.get().setDOB(staffDTO.getDOB());
+            tmpStaff.get().setDOB(staffDTO.getDob());
             tmpStaff.get().setBuildingNo(staffDTO.getBuildingNo());
             tmpStaff.get().setLane(staffDTO.getLane());
             tmpStaff.get().setCity(staffDTO.getCity());
