@@ -59,6 +59,7 @@ public class StaffController {
     public List<StaffDTO> getAllStaff() {
         return staffService.getAllStaff();
     }
+
     @GetMapping(value = "/{staffId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public StaffResponse getStaff(@PathVariable ("staffId") String staffId)  {
         return staffService.getSelectedStaff(staffId);
