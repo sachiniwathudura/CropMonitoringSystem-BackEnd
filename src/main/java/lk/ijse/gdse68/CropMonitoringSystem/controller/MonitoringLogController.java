@@ -31,10 +31,7 @@ public class MonitoringLogController {
     public ResponseEntity<Void> saveLog(
             @RequestPart("logDate") Date logDate,
             @RequestPart("observationDetails")String observationDetails,
-            @RequestPart("observedImage") MultipartFile observedImage,
-            @RequestPart("field")String field,
-            @RequestPart("crop")String crop,
-            @RequestPart("staff")String staff
+            @RequestPart("observedImage") MultipartFile observedImage
     ){
         try {
             String base64LogImg = AppUtil.toBase64LogImg(String.valueOf(observedImage));
