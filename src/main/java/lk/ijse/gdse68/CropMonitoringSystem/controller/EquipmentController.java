@@ -1,7 +1,6 @@
 package lk.ijse.gdse68.CropMonitoringSystem.controller;
 
 import lk.ijse.gdse68.CropMonitoringSystem.CustomObj.EquipmentServiceResponse;
-import lk.ijse.gdse68.CropMonitoringSystem.CustomObj.VehicleResponse;
 import lk.ijse.gdse68.CropMonitoringSystem.dto.EquipmentDTO;
 import lk.ijse.gdse68.CropMonitoringSystem.exception.DataPersistFailedException;
 import lk.ijse.gdse68.CropMonitoringSystem.exception.EquipmentNotFoundException;
