@@ -41,7 +41,7 @@ public class VehicleServiceImpl implements VehicleService {
         if(!tmpVehicleEntity.isPresent()){
             throw new VehicleNotFoundException("Vehicle not found");
         }else {
-            tmpVehicleEntity.get().setVehicleCode(vehicleDTO.getVehicleCode());
+//            tmpVehicleEntity.get().setVehicleCode(vehicleDTO.getVehicleCode());
             tmpVehicleEntity.get().setCategory(vehicleDTO.getCategory());
             tmpVehicleEntity.get().setFuelType(vehicleDTO.getFuelType());
             tmpVehicleEntity.get().setLicensePlate(vehicleDTO.getLicensePlate());
