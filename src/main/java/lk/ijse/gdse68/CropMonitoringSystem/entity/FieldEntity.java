@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.awt.*;
 import java.util.List;
 
 @AllArgsConstructor
@@ -43,13 +42,6 @@ public class FieldEntity implements SuperEntity{
     )
     private List<StaffEntity> assignedStaff;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "field_monitoeingLog",
-//            joinColumns = @JoinColumn(name = "fieldCode"),
-//            inverseJoinColumns = @JoinColumn(name = "logCode")
-//    )
-//    private List<MonitoringLogEntity> monitoringLogEntities;
     @OneToMany(mappedBy = "field",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<MonitoringLogEntity>  monitoringLogEntity;
 
