@@ -17,5 +17,4 @@ public class MonitoringLogDTO implements SuperDTO, MonitoringLogResponse {
     private String observationDetails;
     private String observedImage;
     private String fieldCode;
-
 }

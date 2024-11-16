@@ -3,11 +3,15 @@ package lk.ijse.gdse68.CropMonitoringSystem.service.Impl;
 import jakarta.transaction.Transactional;
 import lk.ijse.gdse68.CropMonitoringSystem.CustomObj.Impl.MonitoringLogErrorResponse;
 import lk.ijse.gdse68.CropMonitoringSystem.CustomObj.MonitoringLogResponse;
+import lk.ijse.gdse68.CropMonitoringSystem.dao.FieldDao;
 import lk.ijse.gdse68.CropMonitoringSystem.dao.MonitoringLogDao;
 import lk.ijse.gdse68.CropMonitoringSystem.dto.MonitoringLogDTO;
+import lk.ijse.gdse68.CropMonitoringSystem.entity.FieldEntity;
 import lk.ijse.gdse68.CropMonitoringSystem.entity.MonitoringLogEntity;
 import lk.ijse.gdse68.CropMonitoringSystem.exception.CropNotFoundException;
 import lk.ijse.gdse68.CropMonitoringSystem.exception.DataPersistFailedException;
+import lk.ijse.gdse68.CropMonitoringSystem.exception.FieldNotFoundException;
+import lk.ijse.gdse68.CropMonitoringSystem.exception.MonitoringLogNotFoundException;
 import lk.ijse.gdse68.CropMonitoringSystem.service.MonitoringLogService;
 import lk.ijse.gdse68.CropMonitoringSystem.util.AppUtil;
 import lk.ijse.gdse68.CropMonitoringSystem.util.Mapping;
@@ -23,6 +27,8 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
     @Autowired
     private MonitoringLogDao monitoringLogDao;
     @Autowired
+    private FieldDao fieldDao;
+    @Autowired
     private Mapping mapping;
     @Override
     public void saveMonitoringLog(MonitoringLogDTO monitoringLogDTO) {
@@ -36,7 +42,26 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
 
     @Override
     public void updateMonitoringLog(String logCode, MonitoringLogDTO monitoringLogDTO) {
+        Optional<MonitoringLogEntity> byId = monitoringLogDao.findById(logCode);
+        if (!byId.isPresent()){
+            throw new MonitoringLogNotFoundException("Couldn't find the entry!");
+        } else {
+            MonitoringLogEntity monitoringLogEntity = byId.get();
+            // Set other fields
+            monitoringLogEntity.setLogDate(monitoringLogDTO.getLogDate());
+            monitoringLogEntity.setObservationDetails(monitoringLogDTO.getObservationDetails());
+            monitoringLogEntity.setObservedImage(monitoringLogDTO.getObservedImage());
 
+            // Fetch the FieldEntity based on fieldCode
+            Optional<FieldEntity> fieldEntityOpt = fieldDao.findById(monitoringLogDTO.getFieldCode());
+            if (!fieldEntityOpt.isPresent()) {
+                throw new FieldNotFoundException("Field not found for fieldCode: " + monitoringLogDTO.getFieldCode());
+            }
+            monitoringLogEntity.setField(fieldEntityOpt.get());
+
+            // Save the updated monitoringLogEntity back to the database
+            monitoringLogDao.save(monitoringLogEntity);
+        }
     }
 
     @Override

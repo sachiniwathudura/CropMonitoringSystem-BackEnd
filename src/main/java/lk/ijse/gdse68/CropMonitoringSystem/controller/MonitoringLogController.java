@@ -1,16 +1,14 @@
 package lk.ijse.gdse68.CropMonitoringSystem.controller;
 
-import lk.ijse.gdse68.CropMonitoringSystem.CustomObj.CropResponse;
 import lk.ijse.gdse68.CropMonitoringSystem.CustomObj.MonitoringLogResponse;
-import lk.ijse.gdse68.CropMonitoringSystem.dto.CropDTO;
-import lk.ijse.gdse68.CropMonitoringSystem.dto.MonitoringLogDTO;
-import lk.ijse.gdse68.CropMonitoringSystem.exception.CropNotFoundException;
+import lk.ijse.gdse68.CropMonitoringSystem.dto.MonitoringLogDTO;;
 import lk.ijse.gdse68.CropMonitoringSystem.exception.DataPersistFailedException;
 import lk.ijse.gdse68.CropMonitoringSystem.exception.MonitoringLogNotFoundException;
 import lk.ijse.gdse68.CropMonitoringSystem.service.MonitoringLogService;
 import lk.ijse.gdse68.CropMonitoringSystem.util.AppUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -29,9 +27,10 @@ public class MonitoringLogController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> saveLog(
-            @RequestPart("logDate") Date logDate,
-            @RequestPart("observationDetails")String observationDetails,
-            @RequestPart("observedImage") MultipartFile observedImage
+            @RequestParam("logDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date logDate,
+            @RequestParam("observationDetails")String observationDetails,
+            @RequestParam("observedImage") MultipartFile observedImage,
+            @RequestParam("fieldCode") String fieldCode
     ){
         try {
             String base64LogImg = AppUtil.toBase64LogImg(String.valueOf(observedImage));
@@ -40,6 +39,7 @@ public class MonitoringLogController {
             saveMonitoringLogDTO.setObservationDetails(observationDetails);
             saveMonitoringLogDTO.setObservedImage(String.valueOf(observedImage));
             saveMonitoringLogDTO.setObservedImage(base64LogImg);
+            saveMonitoringLogDTO.setFieldCode(fieldCode);
             monitoringLogService.saveMonitoringLog(saveMonitoringLogDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (DataPersistFailedException e) {
@@ -48,15 +48,13 @@ public class MonitoringLogController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @PatchMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PatchMapping(value = "/{logCode}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> upadetLog(
             @PathVariable("logCode") String logCode,
-            @RequestPart("logDate") Date logDate,
-            @RequestPart("observationDetails")String observationDetails,
-            @RequestPart("observedImage") MultipartFile observedImage,
-            @RequestPart("field")String field,
-            @RequestPart("crop")String crop,
-            @RequestPart("staff")String staff
+            @RequestParam("logDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date logDate,
+            @RequestParam("observationDetails")String observationDetails,
+            @RequestParam("observedImage") MultipartFile observedImage,
+            @RequestParam("fieldCode")String fieldCode
     ){
         try {
             String base64LogImg = AppUtil.toBase64LogImg(String.valueOf(observedImage));
@@ -65,6 +63,7 @@ public class MonitoringLogController {
             updateMonitoringLogDTO.setObservationDetails(observationDetails);
             updateMonitoringLogDTO.setObservedImage(String.valueOf(observedImage));
             updateMonitoringLogDTO.setObservedImage(base64LogImg);
+            updateMonitoringLogDTO.setFieldCode(fieldCode);
             monitoringLogService.updateMonitoringLog(logCode,updateMonitoringLogDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (DataPersistFailedException e) {
