@@ -26,10 +26,11 @@ public class FieldController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> saveFields(
             @RequestPart("fieldName") String fieldName,
-            @RequestPart("extentSize") String extentSize,
-            @RequestPart("fieldLocation") MultipartFile fieldLocation,
-            @RequestPart("img1") String img1,
-            @RequestPart("img2") String img2
+            @RequestPart("extentSize") Double extentSize,
+            @RequestPart("fieldLocation") String fieldLocation,
+            @RequestPart("img1") MultipartFile img1,
+            @RequestPart("img2") MultipartFile img2,
+            @RequestPart("equipmentCode") String equipmentCode
     ) {
         try {
             String base64ProfilePic1 = AppUtil.toBase64ProfilePic(img1);
@@ -37,15 +38,17 @@ public class FieldController {
             //
             FieldDTO fieldDTO = new FieldDTO();
             fieldDTO.setFieldName(fieldName);
-            fieldDTO.setExtentSize(Double.valueOf(extentSize));
-            fieldDTO.setFieldLocation(String.valueOf(fieldLocation));
+            fieldDTO.setExtentSize(extentSize);
+            fieldDTO.setFieldLocation(fieldLocation);
             fieldDTO.setImg1(base64ProfilePic1);
             fieldDTO.setImg2(base64ProfilePic2);
+            fieldDTO.setEquipmentCode(equipmentCode);
             fieldService.saveField(fieldDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (DataPersistFailedException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -55,9 +58,9 @@ public class FieldController {
             @RequestPart("fieldCode") String fieldCode,
             @RequestPart("fieldName") String fieldName,
             @RequestPart("extentSize") String extentSize,
-            @RequestPart("fieldLocation") MultipartFile fieldLocation,
-            @RequestPart("img1") String img1,
-            @RequestPart("img2") String img2
+            @RequestPart("fieldLocation") String fieldLocation,
+            @RequestPart("img1") MultipartFile img1,
+            @RequestPart("img2") MultipartFile img2
     ) {
         try {
             String base64ProfilePic1 = AppUtil.toBase64ProfilePic(img1);
