@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.awt.*;
 import java.util.List;
 
 @AllArgsConstructor
@@ -16,10 +17,10 @@ public class FieldEntity implements SuperEntity{
     @Id
     private String fieldCode;
     private String fieldName;
-    private Double extentSize;
+    private double extentSize;
 
-    @Column(columnDefinition = "POINT")
-    private String fieldLocation;
+    @Column
+    private Point fieldLocation;
 
     @Column(columnDefinition = "LONGTEXT")
     private String image1;  // Renamed from "fieldImage1"
