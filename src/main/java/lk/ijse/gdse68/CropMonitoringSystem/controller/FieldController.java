@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
 import java.util.List;
 
 @RestController
@@ -25,12 +26,13 @@ public class FieldController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> saveFields(
-            @RequestPart("fieldName") String fieldName,
-            @RequestPart("extentSize") Double extentSize,
-            @RequestPart("fieldLocation") String fieldLocation,
-            @RequestPart("img1") MultipartFile img1,
-            @RequestPart("img2") MultipartFile img2,
-            @RequestPart("equipmentCode") String equipmentCode
+            @RequestParam("fieldName") String fieldName,
+            @RequestParam("extentSize") Double extentSize,
+            @RequestParam("latitude") double latitude,
+            @RequestParam("longitude") double longitude,
+            @RequestParam("img1") MultipartFile img1,
+            @RequestParam("img2") MultipartFile img2,
+            @RequestParam("equipmentCode") String equipmentCode
     ) {
         try {
             String base64ProfilePic1 = AppUtil.toBase64ProfilePic(img1);
@@ -39,10 +41,12 @@ public class FieldController {
             FieldDTO fieldDTO = new FieldDTO();
             fieldDTO.setFieldName(fieldName);
             fieldDTO.setExtentSize(extentSize);
-            fieldDTO.setFieldLocation(fieldLocation);
+//            fieldDTO.setFieldLocation(fieldLocation);
+            fieldDTO.setFieldLocation(new Point((int) latitude, (int) longitude));
             fieldDTO.setImg1(base64ProfilePic1);
             fieldDTO.setImg2(base64ProfilePic2);
             fieldDTO.setEquipmentCode(equipmentCode);
+
             fieldService.saveField(fieldDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (DataPersistFailedException e) {
@@ -55,10 +59,12 @@ public class FieldController {
 
     @PatchMapping(value = "/{fieldCode}", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> updateFields(
-            @RequestPart("fieldCode") String fieldCode,
+            @PathVariable("fieldCode") String fieldCode,
             @RequestPart("fieldName") String fieldName,
             @RequestPart("extentSize") String extentSize,
-            @RequestPart("fieldLocation") String fieldLocation,
+//            @RequestPart("fieldLocation") String fieldLocation,
+            @RequestParam("latitude") double latitude,
+            @RequestParam("longitude") double longitude,
             @RequestPart("img1") MultipartFile img1,
             @RequestPart("img2") MultipartFile img2
     ) {
@@ -69,10 +75,10 @@ public class FieldController {
             FieldDTO updatefieldDTO = new FieldDTO();
             updatefieldDTO.setFieldName(fieldName);
             updatefieldDTO.setExtentSize(Double.valueOf(extentSize));
-            updatefieldDTO.setFieldLocation(String.valueOf(fieldLocation));
+            updatefieldDTO.setFieldLocation(new Point((int) latitude, (int) longitude));
             updatefieldDTO.setImg1(base64ProfilePic1);
             updatefieldDTO.setImg2(base64ProfilePic2);
-            fieldService.saveField( updatefieldDTO);
+            fieldService.updateField(fieldCode, updatefieldDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (DataPersistFailedException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

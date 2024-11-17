@@ -5,9 +5,11 @@ import lk.ijse.gdse68.CropMonitoringSystem.CustomObj.Impl.FieldErrorResponse;
 import lk.ijse.gdse68.CropMonitoringSystem.CustomObj.FieldResponse;
 import lk.ijse.gdse68.CropMonitoringSystem.dao.FieldDao;
 import lk.ijse.gdse68.CropMonitoringSystem.dto.FieldDTO;
+import lk.ijse.gdse68.CropMonitoringSystem.entity.CropEntity;
 import lk.ijse.gdse68.CropMonitoringSystem.entity.FieldEntity;
 import lk.ijse.gdse68.CropMonitoringSystem.exception.CropNotFoundException;
 import lk.ijse.gdse68.CropMonitoringSystem.exception.DataPersistFailedException;
+import lk.ijse.gdse68.CropMonitoringSystem.exception.FieldNotFoundException;
 import lk.ijse.gdse68.CropMonitoringSystem.service.FieldService;
 import lk.ijse.gdse68.CropMonitoringSystem.util.AppUtil;
 import lk.ijse.gdse68.CropMonitoringSystem.util.Mapping;
@@ -38,7 +40,17 @@ public class FieldServiceImpl implements FieldService {
 
     @Override
     public void updateField(String fieldCode, FieldDTO fieldDTO) {
-
+        Optional<FieldEntity> tmpFieldEntity = fieldDao.findById(fieldCode);
+        if(!tmpFieldEntity.isPresent()){
+            throw new FieldNotFoundException("crop not found");
+        }else{
+            tmpFieldEntity.get().setFieldName(fieldDTO.getFieldName());
+            tmpFieldEntity.get().setExtentSize(fieldDTO.getExtentSize());
+            tmpFieldEntity.get().setFieldLocation(fieldDTO.getFieldLocation());
+            tmpFieldEntity.get().setImage1(fieldDTO.getImg1());
+            tmpFieldEntity.get().setImage2(fieldDTO.getImg2());
+//            tmpFieldEntity.get().setField(fieldDTO.getF);
+        }
 
     }
 
