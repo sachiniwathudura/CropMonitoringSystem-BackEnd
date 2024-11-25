@@ -31,5 +31,7 @@ public class StaffDTO implements SuperDTO, StaffResponse {
     private String email;
     private String equipmentCode;
     private String vehicleCode;
+//    private List<String> fieldCode;
+    private List<String> logCode;
 
 }

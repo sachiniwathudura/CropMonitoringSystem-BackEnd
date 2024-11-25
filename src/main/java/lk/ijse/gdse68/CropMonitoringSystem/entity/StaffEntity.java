@@ -21,7 +21,7 @@ public class StaffEntity implements SuperEntity{
     private String designation;
     private String gender;
     private LocalDate joinDate;
-    private LocalDate DOB;
+    private LocalDate Dob;
     private String buildingNo;
     private String lane;
     private String city;
@@ -40,7 +40,7 @@ public class StaffEntity implements SuperEntity{
 
     @ManyToOne
     @JoinColumn(name ="equipmentCode")
-    private EquipmentEntity staff;
+    private EquipmentEntity equipmentEntity;
 
     @ManyToOne
     @JoinColumn(name = "vehicleCode")
