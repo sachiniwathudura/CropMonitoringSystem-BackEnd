@@ -31,6 +31,4 @@ public class MonitoringLogEntity implements SuperEntity{
 
     @ManyToMany(mappedBy = "staffLogEntities")
     private List<StaffEntity> staffEntities;
-
-
 }
