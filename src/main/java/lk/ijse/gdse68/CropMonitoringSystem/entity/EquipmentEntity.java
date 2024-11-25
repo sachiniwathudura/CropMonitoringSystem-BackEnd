@@ -21,9 +21,9 @@ public class EquipmentEntity implements SuperEntity{
     @Enumerated(EnumType.STRING)
     private EquipmentType type;
 
-    @OneToMany(mappedBy = "staff",cascade = CascadeType.ALL,fetch = FetchType.LAZY )
+    @OneToMany(mappedBy = "equipmentEntity",cascade = CascadeType.ALL,fetch = FetchType.LAZY )
     private List<StaffEntity> staff;
 
-    @OneToMany(mappedBy = "field",cascade = CascadeType.ALL,fetch = FetchType.LAZY )
+    @OneToMany(mappedBy = "equipment",cascade = CascadeType.ALL,fetch = FetchType.LAZY )
     private List<FieldEntity> fieldEntities;
 }
