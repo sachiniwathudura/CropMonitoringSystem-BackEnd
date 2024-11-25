@@ -60,13 +60,16 @@ public class FieldController {
     @PatchMapping(value = "/{fieldCode}", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> updateFields(
             @PathVariable("fieldCode") String fieldCode,
-            @RequestPart("fieldName") String fieldName,
-            @RequestPart("extentSize") String extentSize,
+            @RequestParam("fieldName") String fieldName,
+            @RequestParam("extentSize") String extentSize,
 //            @RequestPart("fieldLocation") String fieldLocation,
             @RequestParam("latitude") double latitude,
             @RequestParam("longitude") double longitude,
-            @RequestPart("img1") MultipartFile img1,
-            @RequestPart("img2") MultipartFile img2
+            @RequestParam("img1") MultipartFile img1,
+            @RequestParam("img2") MultipartFile img2,
+            @RequestParam("equipmentCode") String equipmentCode,
+            @RequestParam("staffId")List<String> staffId
+
     ) {
         try {
             String base64ProfilePic1 = AppUtil.toBase64ProfilePic(img1);
@@ -78,6 +81,8 @@ public class FieldController {
             updatefieldDTO.setFieldLocation(new Point((int) latitude, (int) longitude));
             updatefieldDTO.setImg1(base64ProfilePic1);
             updatefieldDTO.setImg2(base64ProfilePic2);
+            updatefieldDTO.setEquipmentCode(equipmentCode);
+            updatefieldDTO.setStaffId(staffId);
             fieldService.updateField(fieldCode, updatefieldDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (DataPersistFailedException e) {
