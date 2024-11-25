@@ -33,7 +33,7 @@ public class FieldEntity implements SuperEntity{
 
     @ManyToOne
     @JoinColumn(name = "equipmentCode")
-    private EquipmentEntity field;
+    private EquipmentEntity equipment;
 
     @ManyToMany
     @JoinTable(

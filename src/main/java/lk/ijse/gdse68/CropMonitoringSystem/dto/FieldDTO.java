@@ -19,4 +19,5 @@ public class FieldDTO implements SuperDTO, FieldResponse {
     private String img1;
     private String img2;
     private String equipmentCode;
+    private List<String> staffId;
 }
