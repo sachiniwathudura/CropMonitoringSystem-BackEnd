@@ -54,12 +54,13 @@ public class CropController {
 
     @PatchMapping(value = "/{cropCode}", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> updateCrop(@PathVariable("cropCode") String cropCode,
-                                           @RequestPart("commonName")String commonName,
-                                           @RequestPart("scientificName")String scientificName,
-                                           @RequestPart("image") MultipartFile image,
-                                           @RequestPart("category")String category,
-                                           @RequestPart("cropSeason")String cropSeason,
-                                           @RequestPart("fieldCode")String fieldCode
+                                           @RequestParam("commonName")String commonName,
+                                           @RequestParam("scientificName")String scientificName,
+                                           @RequestParam("image") MultipartFile image,
+                                           @RequestParam("category")String category,
+                                           @RequestParam("cropSeason")String cropSeason,
+                                           @RequestParam("fieldCode")String fieldCode,
+                                           @RequestParam("logCode")List<String> logCode
     ){
         try {
             String base64ProfilePic = AppUtil.toBase64ProfilePic(image);
@@ -70,6 +71,7 @@ public class CropController {
             updateCropDTO.setCategory(category);
             updateCropDTO.setCropSeason(cropSeason);
             updateCropDTO.setFieldCode(fieldCode);
+            updateCropDTO.setLogCode(logCode);
             cropService.updateCrop(cropCode, updateCropDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (CropNotFoundException e) {
