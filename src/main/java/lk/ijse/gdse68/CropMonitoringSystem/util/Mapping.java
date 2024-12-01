@@ -86,8 +86,8 @@ public class Mapping {
     public UserServiceDTO convertUserEntityToDTO(UserServiceEntity entity){
         return modelMapper.map(entity,UserServiceDTO.class);
     }
-    public UserServiceEntity convertToUserEntity(List<UserServiceEntity> entityList){
-        return modelMapper.map(entityList, UserServiceEntity.class);
+    public UserServiceEntity convertToUserEntity(UserServiceDTO userServiceDTO){
+        return modelMapper.map(userServiceDTO, UserServiceEntity.class);
     }
     public List<UserServiceDTO> convertTOUserDTOList(List<UserServiceEntity> list){
         return modelMapper.map(list, new TypeToken<List<UserServiceDTO>>(){}.getType());
