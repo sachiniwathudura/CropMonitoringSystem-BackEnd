@@ -21,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/monitoring")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class MonitoringLogController {
     @Autowired
     private MonitoringLogService monitoringLogService;
