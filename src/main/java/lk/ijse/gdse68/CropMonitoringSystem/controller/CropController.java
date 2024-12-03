@@ -19,7 +19,9 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/crops")
 @RequiredArgsConstructor
-@CrossOrigin("*")
+//@CrossOrigin("*")
+//@CrossOrigin("*")
+@CrossOrigin(origins = "http://127.0.0.1:5500", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH, RequestMethod.OPTIONS})
 public class CropController {
 
     @Autowired
@@ -27,6 +29,7 @@ public class CropController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> saveCrops(
+            @RequestPart("cropCode")String cropCode,
             @RequestPart("commonName")String commonName,
             @RequestPart("scientificName")String scientificName,
             @RequestPart("image") MultipartFile image,
@@ -35,9 +38,10 @@ public class CropController {
             @RequestPart("fieldCode")String fieldCode
     ){
         try {
-            String base64ProfilePic = AppUtil.toBase64ProfilePic(image);
+            String base64ProfilePic = AppUtil.toBase64Image(image);
             // build the user object
             CropDTO buildCropDTO = new CropDTO();
+            buildCropDTO.setCropCode(cropCode);
             buildCropDTO.setCommonName(commonName);
             buildCropDTO.setScientificName(scientificName);
             buildCropDTO.setImage(base64ProfilePic);
@@ -64,7 +68,7 @@ public class CropController {
                                            @RequestParam("logCode")List<String> logCode
     ){
         try {
-            String base64ProfilePic = AppUtil.toBase64ProfilePic(image);
+            String base64ProfilePic = AppUtil.toBase64Image(image);
             CropDTO updateCropDTO = new CropDTO();
             updateCropDTO.setCommonName(commonName);
             updateCropDTO.setScientificName(scientificName);

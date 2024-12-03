@@ -20,13 +20,15 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/fields")
 @RequiredArgsConstructor
-@CrossOrigin("*")
+//@CrossOrigin("*")
+@CrossOrigin(origins = "http://127.0.0.1:5500", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH, RequestMethod.OPTIONS})
 public class FieldController {
     @Autowired
     private FieldService fieldService;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> saveFields(
+            @RequestParam("fieldCode")String fieldCode,
             @RequestParam("fieldName") String fieldName,
             @RequestParam("extentSize") Double extentSize,
             @RequestParam("latitude") double latitude,
@@ -36,10 +38,16 @@ public class FieldController {
             @RequestParam("equipmentCode") String equipmentCode
     ) {
         try {
-            String base64ProfilePic1 = AppUtil.toBase64ProfilePic(img1);
-            String base64ProfilePic2 = AppUtil.toBase64ProfilePic(img2);
+//            String base64ProfilePic1 = AppUtil.toBase64ProfilePic(img1);
+//            String base64ProfilePic2 = AppUtil.toBase64ProfilePic(img2);
+            byte[] imageByteCollection1 = img1.getBytes();
+            String base64ProfilePic1 = AppUtil.toBase64ProfilePic(imageByteCollection1);
+
+            byte[] imageByteCollection2 = img2.getBytes();
+            String base64ProfilePic2 = AppUtil.toBase64ProfilePic(imageByteCollection2);
             //
             FieldDTO fieldDTO = new FieldDTO();
+            fieldDTO.setFieldCode(fieldCode);
             fieldDTO.setFieldName(fieldName);
             fieldDTO.setExtentSize(extentSize);
 //            fieldDTO.setFieldLocation(fieldLocation);
@@ -73,8 +81,14 @@ public class FieldController {
 
     ) {
         try {
-            String base64ProfilePic1 = AppUtil.toBase64ProfilePic(img1);
-            String base64ProfilePic2 = AppUtil.toBase64ProfilePic(img2);
+//            String base64ProfilePic1 = AppUtil.toBase64ProfilePic(img1);
+//            String base64ProfilePic2 = AppUtil.toBase64ProfilePic(img2);
+            // Convert images to Base64
+            byte[] imageByteCollection1 = img1.getBytes();
+            String base64ProfilePic1 = AppUtil.toBase64ProfilePic(imageByteCollection1);
+
+            byte[] imageByteCollection2 = img2.getBytes();
+            String base64ProfilePic2 = AppUtil.toBase64ProfilePic(imageByteCollection2);
             //
             FieldDTO updatefieldDTO = new FieldDTO();
             updatefieldDTO.setFieldName(fieldName);
