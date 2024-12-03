@@ -17,6 +17,5 @@ public class EquipmentDTO implements SuperDTO, EquipmentServiceResponse {
     private String name;
     private String type;
     private String status;
-    private List<String> staffIds; // List of assigned staff IDs
-    private List<String> fieldCodes;
+
 }

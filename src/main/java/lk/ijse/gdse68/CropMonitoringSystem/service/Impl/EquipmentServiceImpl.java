@@ -8,14 +8,19 @@ import lk.ijse.gdse68.CropMonitoringSystem.dao.FieldDao;
 import lk.ijse.gdse68.CropMonitoringSystem.dao.StaffDao;
 import lk.ijse.gdse68.CropMonitoringSystem.dto.EquipmentDTO;
 import lk.ijse.gdse68.CropMonitoringSystem.entity.EquipmentEntity;
+import lk.ijse.gdse68.CropMonitoringSystem.entity.FieldEntity;
+import lk.ijse.gdse68.CropMonitoringSystem.entity.StaffEntity;
+import lk.ijse.gdse68.CropMonitoringSystem.enums.EquipmentType;
 import lk.ijse.gdse68.CropMonitoringSystem.exception.CropNotFoundException;
 import lk.ijse.gdse68.CropMonitoringSystem.exception.DataPersistFailedException;
+import lk.ijse.gdse68.CropMonitoringSystem.exception.EquipmentNotFoundException;
 import lk.ijse.gdse68.CropMonitoringSystem.service.EquipmentService;
 import lk.ijse.gdse68.CropMonitoringSystem.util.AppUtil;
 import lk.ijse.gdse68.CropMonitoringSystem.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +42,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Override
     public void saveEquipment(EquipmentDTO equipmentDTO) {
-        equipmentDTO.setEquipmentCode(AppUtil.createEquipmentId());
+        equipmentDTO.setEquipmentCode(equipmentDTO.getEquipmentCode());
         var equipmentEntity = mapping.convertToEntity(equipmentDTO);
         var saveEquipment= equipmentDao.save(equipmentEntity);
         if(saveEquipment==null){
@@ -47,44 +52,28 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Override
     public void updateEquipment(String EquipmentId, EquipmentDTO equipmentDTO) {
-//        Optional<EquipmentEntity> tmpEquipEntity = equipmentDao.findById(EquipmentId);
-//
-//        if (!tmpEquipEntity.isPresent()) {
-//            throw new CropNotFoundException("Equipment not found");
-//        } else {
-//            EquipmentEntity equipment = tmpEquipEntity.get();
-//
-//            // Update simple fields
-//            equipment.setEquipmentName(equipmentDTO.getName());
-//            equipment.setType(String.valueOf(EquipmentType.valueOf(equipmentDTO.getType())));
-//            equipment.setStatus(equipmentDTO.getStatus());
-//
-//            // Update staff association
-//            List<StaffEntity> staffEntities = new ArrayList<>();
-//            for (String staffId : equipmentDTO.getStaffIds()) {
-//                StaffEntity staff = staffDao.findById(staffId)
-//                        .orElseThrow(() -> new CropNotFoundException("Staff not found: " + staffId));
-//                staffEntities.add(staff);
-//            }
-//            equipment.setAssignedStaff(staffEntities);
-//
-//            // Update field association
-//            List<FieldEntity> fieldEntities = new ArrayList<>();
-//            for (String fieldCode : equipmentDTO.getFieldCodes()) {
-//                FieldEntity field = fieldDao.findById(fieldCode)
-//                        .orElseThrow(() -> new CropNotFoundException("Field not found: " + fieldCode));
-//                fieldEntities.add(field);
-//            }
-//            equipment.((FieldEntity) fieldEntities);
-//            equipmentDao.save(equipment);
-//        }
+        Optional<EquipmentEntity> tmpEquipEntity = equipmentDao.findById(EquipmentId);
+
+        if (!tmpEquipEntity.isPresent()) {
+            throw new EquipmentNotFoundException("Equipment not found");
+        } else {
+            EquipmentEntity equipment = tmpEquipEntity.get();
+
+            // Update simple fields
+            equipment.setEquipmentName(equipmentDTO.getEquipmentCode());
+            equipment.setStatus(equipmentDTO.getStatus());
+            equipment.setType(EquipmentType.valueOf(String.valueOf(equipmentDTO.getType())));
+
+            equipmentDao.save(equipment);
+        }
+
     }
 
     @Override
     public void deleteEquipment(String EquipmentId) {
         Optional<EquipmentEntity> tmpEquipEntity = equipmentDao.findById(EquipmentId);
         if(!tmpEquipEntity.isPresent()){
-            throw new CropNotFoundException("Equipment not found");
+            throw new EquipmentNotFoundException("Equipment not found");
         }else{
             equipmentDao.deleteById(EquipmentId);
         }

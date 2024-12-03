@@ -1,8 +1,6 @@
 package lk.ijse.gdse68.CropMonitoringSystem.dto;
 
 import lk.ijse.gdse68.CropMonitoringSystem.CustomObj.StaffResponse;
-import lk.ijse.gdse68.CropMonitoringSystem.entity.FieldEntity;
-import lk.ijse.gdse68.CropMonitoringSystem.entity.VehicleEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -38,7 +38,7 @@ public class StaffServiceImpl implements StaffService {
     private Mapping mapping;
     @Override
     public void saveStaff(StaffDTO staffDTO) {
-        staffDTO.setStaffId(AppUtil.createStaffId());
+        staffDTO.setStaffId(staffDTO.getStaffId());
         StaffEntity staffEntity=mapping.convertToEntity(staffDTO);
 
         // Fetch and set the EquipmentEntity if equipmentCode is provided

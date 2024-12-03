@@ -38,7 +38,7 @@ public class CropServiceImpl implements CropService {
 
     @Override
     public void saveCrop(CropDTO cropDTO) {
-        cropDTO.setCropCode(AppUtil.createCropId());
+        cropDTO.setCropCode(cropDTO.getCropCode());
         var cropEntity = mapping.convertToEntity(cropDTO);
         var saveCrop= cropDao.save(cropEntity);
         if(saveCrop==null){
