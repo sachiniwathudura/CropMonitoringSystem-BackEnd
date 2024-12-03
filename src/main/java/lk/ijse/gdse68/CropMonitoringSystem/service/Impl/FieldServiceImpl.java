@@ -38,13 +38,17 @@ public class FieldServiceImpl implements FieldService {
     private Mapping mapping;
 
     @Override
-    public void saveField(FieldDTO fieldDTO) {
-        fieldDTO.setFieldCode(AppUtil.createFieldCode());
-        var fieldEntity = mapping.convertToEntity(fieldDTO);
-        var saveField= fieldDao.save(fieldEntity);
-        if(saveField==null){
-            throw new DataPersistFailedException("can not save field");
+    public String saveField(FieldDTO fieldDTO) {
+        fieldDTO.setFieldCode(fieldDTO.getFieldCode());
+        FieldEntity save = fieldDao.save(mapping.convertToEntity(fieldDTO));
+
+        // Check if saving failed or if the field code is null
+        if (save == null || save.getFieldCode() == null) {
+            return "Couldn't save Field details!";
         }
+
+        // Return a success message if saving was successful
+        return "Field added successfully with code: " + save.getFieldCode();
     }
 
     @Override

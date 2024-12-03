@@ -7,7 +7,7 @@ import lk.ijse.gdse68.CropMonitoringSystem.dto.FieldDTO;
 import java.util.List;
 
 public interface FieldService {
-    void saveField(FieldDTO fieldDTO);
+     String saveField(FieldDTO fieldDTO);
     void updateField(String fieldCode, FieldDTO fieldDTO);
     void deleteField(String fieldCode);
     FieldResponse getSelectedField(String fieldCode);
