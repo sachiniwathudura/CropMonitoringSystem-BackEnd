@@ -62,8 +62,8 @@ public class FieldServiceImpl implements FieldService {
             field.setFieldName(fieldDTO.getFieldName());
             field.setExtentSize(fieldDTO.getExtentSize());
             field.setFieldLocation(fieldDTO.getFieldLocation());
-            field.setImage1(fieldDTO.getImg1());
-            field.setImage2(fieldDTO.getImg2());
+            field.setImage1(fieldDTO.getImage1());
+            field.setImage2(fieldDTO.getImage2());
 
             // Fetch the FieldEntity based on fieldCode
             Optional<EquipmentEntity>equipmentEntity = equipmentServiceDao.findById(fieldDTO.getEquipmentCode());

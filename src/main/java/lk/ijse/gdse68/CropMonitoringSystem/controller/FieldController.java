@@ -33,17 +33,17 @@ public class FieldController {
             @RequestParam("extentSize") Double extentSize,
             @RequestParam("latitude") double latitude,
             @RequestParam("longitude") double longitude,
-            @RequestParam("img1") MultipartFile img1,
-            @RequestParam("img2") MultipartFile img2,
+            @RequestParam("image1") MultipartFile image1,
+            @RequestParam("image2") MultipartFile image2,
             @RequestParam("equipmentCode") String equipmentCode
     ) {
         try {
 //            String base64ProfilePic1 = AppUtil.toBase64ProfilePic(img1);
 //            String base64ProfilePic2 = AppUtil.toBase64ProfilePic(img2);
-            byte[] imageByteCollection1 = img1.getBytes();
+            byte[] imageByteCollection1 = image1.getBytes();
             String base64ProfilePic1 = AppUtil.toBase64ProfilePic(imageByteCollection1);
 
-            byte[] imageByteCollection2 = img2.getBytes();
+            byte[] imageByteCollection2 = image2.getBytes();
             String base64ProfilePic2 = AppUtil.toBase64ProfilePic(imageByteCollection2);
             //
             FieldDTO fieldDTO = new FieldDTO();
@@ -52,8 +52,8 @@ public class FieldController {
             fieldDTO.setExtentSize(extentSize);
 //            fieldDTO.setFieldLocation(fieldLocation);
             fieldDTO.setFieldLocation(new Point((int) latitude, (int) longitude));
-            fieldDTO.setImg1(base64ProfilePic1);
-            fieldDTO.setImg2(base64ProfilePic2);
+            fieldDTO.setImage1(base64ProfilePic1);
+            fieldDTO.setImage2(base64ProfilePic2);
             fieldDTO.setEquipmentCode(equipmentCode);
 
             fieldService.saveField(fieldDTO);
@@ -74,8 +74,8 @@ public class FieldController {
 //            @RequestPart("fieldLocation") String fieldLocation,
             @RequestParam("latitude") double latitude,
             @RequestParam("longitude") double longitude,
-            @RequestParam("img1") MultipartFile img1,
-            @RequestParam("img2") MultipartFile img2,
+            @RequestParam("image1") MultipartFile img1,
+            @RequestParam("image2") MultipartFile img2,
             @RequestParam("equipmentCode") String equipmentCode,
             @RequestParam("staffId")List<String> staffId
 
@@ -94,8 +94,8 @@ public class FieldController {
             updatefieldDTO.setFieldName(fieldName);
             updatefieldDTO.setExtentSize(Double.valueOf(extentSize));
             updatefieldDTO.setFieldLocation(new Point((int) latitude, (int) longitude));
-            updatefieldDTO.setImg1(base64ProfilePic1);
-            updatefieldDTO.setImg2(base64ProfilePic2);
+            updatefieldDTO.setImage1(base64ProfilePic1);
+            updatefieldDTO.setImage2(base64ProfilePic2);
             updatefieldDTO.setEquipmentCode(equipmentCode);
             updatefieldDTO.setStaffId(staffId);
             fieldService.updateField(fieldCode, updatefieldDTO);
