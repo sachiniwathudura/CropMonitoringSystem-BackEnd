@@ -48,6 +48,7 @@ public class CropController {
             buildCropDTO.setCategory(category);
             buildCropDTO.setCropSeason(cropSeason);
             buildCropDTO.setFieldCode(fieldCode);
+            buildCropDTO.setLogCode(null);
             cropService.saveCrop(buildCropDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (DataPersistFailedException e) {
