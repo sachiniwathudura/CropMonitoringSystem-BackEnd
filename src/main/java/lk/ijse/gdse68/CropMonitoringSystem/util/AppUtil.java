@@ -39,39 +39,52 @@ public class AppUtil {
 //        }
 //        return proPicBase64;
 //    }
-public static String toBase64Image(MultipartFile file) {
-    try {
-        byte[] imageBytes = file.getBytes();
-        return Base64.getEncoder().encodeToString(imageBytes);
-    } catch (IOException e) {
-        e.printStackTrace();
-        return null;
+//public static String toBase64Image(MultipartFile file) {
+//    try {
+//        byte[] imageBytes = file.getBytes();
+//        return Base64.getEncoder().encodeToString(imageBytes);
+//    } catch (IOException e) {
+//        e.printStackTrace();
+//        return null;
+//    }
+//}
+//    public static String toBase64ProfilePic(byte [] profilePic){
+//        return Base64.getEncoder().encodeToString(profilePic);
+//    }
+//
+//    public static String toBase64ProfilePic(String img2) {
+//        String proPicBase64=null;
+//        try{
+//            byte[] imageByteCollection= img2.getBytes();
+//            proPicBase64= Base64.getEncoder().encodeToString(imageByteCollection);
+//
+//        }catch(Exception e ){
+//            e.printStackTrace();
+//        }
+//        return proPicBase64;
+//    }
+//    public static String toBase64LogImg(String LogImg) {
+//        String proPicBase64=null;
+//        try{
+//            byte[] imageByteCollection= LogImg.getBytes();
+//            proPicBase64= Base64.getEncoder().encodeToString(imageByteCollection);
+//
+//        }catch(Exception e ){
+//            e.printStackTrace();
+//        }
+//        return proPicBase64;
+//    }
+
+    public static String toBase64Image(MultipartFile file) {
+        try {
+            byte[] imageBytes = file.getBytes();
+            return Base64.getEncoder().encodeToString(imageBytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
-}
     public static String toBase64ProfilePic(byte [] profilePic){
         return Base64.getEncoder().encodeToString(profilePic);
-    }
-
-    public static String toBase64ProfilePic(String img2) {
-        String proPicBase64=null;
-        try{
-            byte[] imageByteCollection= img2.getBytes();
-            proPicBase64= Base64.getEncoder().encodeToString(imageByteCollection);
-
-        }catch(Exception e ){
-            e.printStackTrace();
-        }
-        return proPicBase64;
-    }
-    public static String toBase64LogImg(String LogImg) {
-        String proPicBase64=null;
-        try{
-            byte[] imageByteCollection= LogImg.getBytes();
-            proPicBase64= Base64.getEncoder().encodeToString(imageByteCollection);
-
-        }catch(Exception e ){
-            e.printStackTrace();
-        }
-        return proPicBase64;
     }
 }
