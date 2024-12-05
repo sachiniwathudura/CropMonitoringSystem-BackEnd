@@ -76,10 +76,7 @@ public class StaffServiceImpl implements StaffService {
         staffEntity.setGender(staffDTO.getGender());
         staffEntity.setJoinDate(staffDTO.getJoinDate());
         staffEntity.setDob(staffDTO.getDob());
-        staffEntity.setBuildingNo(staffDTO.getBuildingNo());
-        staffEntity.setLane(staffDTO.getLane());
-        staffEntity.setCity(staffDTO.getCity());
-        staffEntity.setState(staffDTO.getState());
+        staffEntity.setAddress(staffDTO.getAddress());
         staffEntity.setPostalCode(staffDTO.getPostalCode());
         staffEntity.setContactNo(staffDTO.getContactNo());
         staffEntity.setEmail(staffDTO.getEmail());
