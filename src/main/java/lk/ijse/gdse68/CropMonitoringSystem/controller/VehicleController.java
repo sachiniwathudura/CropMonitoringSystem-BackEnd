@@ -6,6 +6,8 @@ import lk.ijse.gdse68.CropMonitoringSystem.exception.DataPersistFailedException;
 import lk.ijse.gdse68.CropMonitoringSystem.exception.VehicleNotFoundException;
 import lk.ijse.gdse68.CropMonitoringSystem.service.VehicleService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,6 +23,8 @@ import java.util.List;
 @CrossOrigin(origins = "http://127.0.0.1:5500", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH, RequestMethod.OPTIONS})
 public class VehicleController {
 
+    static Logger logger = LoggerFactory.getLogger(VehicleController.class);
+
     @Autowired
     private VehicleService vehicleService;
 
@@ -28,8 +32,10 @@ public class VehicleController {
     public ResponseEntity<Void> createVehicle(@RequestBody VehicleDTO vehicleDTO) {
         try{
             vehicleService.saveVehicle(vehicleDTO);
+            logger.info("vehicle save successfully");
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch(DataPersistFailedException e){
+            logger.warn("bad request");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch(Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

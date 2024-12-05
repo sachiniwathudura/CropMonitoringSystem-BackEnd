@@ -7,6 +7,8 @@ import lk.ijse.gdse68.CropMonitoringSystem.exception.MonitoringLogNotFoundExcept
 import lk.ijse.gdse68.CropMonitoringSystem.service.MonitoringLogService;
 import lk.ijse.gdse68.CropMonitoringSystem.util.AppUtil;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://127.0.0.1:5500", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH, RequestMethod.OPTIONS})
 public class MonitoringLogController {
+    static Logger logger = LoggerFactory.getLogger(MonitoringLogController.class);
     @Autowired
     private MonitoringLogService monitoringLogService;
 
@@ -44,6 +47,7 @@ public class MonitoringLogController {
             saveMonitoringLogDTO.setObservedImage(base64LogImg);
             saveMonitoringLogDTO.setFieldCode(fieldCode);
             monitoringLogService.saveMonitoringLog(saveMonitoringLogDTO);
+            logger.info("save successfully");
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (DataPersistFailedException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

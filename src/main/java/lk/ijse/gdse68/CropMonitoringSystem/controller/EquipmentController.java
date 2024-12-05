@@ -6,6 +6,8 @@ import lk.ijse.gdse68.CropMonitoringSystem.exception.DataPersistFailedException;
 import lk.ijse.gdse68.CropMonitoringSystem.exception.EquipmentNotFoundException;
 import lk.ijse.gdse68.CropMonitoringSystem.service.EquipmentService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,6 +23,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://127.0.0.1:5500", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH, RequestMethod.OPTIONS})
 public class EquipmentController {
 
+    static Logger logger = LoggerFactory.getLogger(FieldController.class);
     @Autowired
     private EquipmentService equipmentService;
 
@@ -28,6 +31,7 @@ public class EquipmentController {
     public ResponseEntity<Void> saveEquipment(@RequestBody EquipmentDTO equipmentDTO)  {
         try{
             equipmentService.saveEquipment(equipmentDTO);
+            logger.info("Equipment save successfully");
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch(DataPersistFailedException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

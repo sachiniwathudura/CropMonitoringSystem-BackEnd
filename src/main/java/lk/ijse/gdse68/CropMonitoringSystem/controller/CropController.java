@@ -7,6 +7,8 @@ import lk.ijse.gdse68.CropMonitoringSystem.exception.DataPersistFailedException;
 import lk.ijse.gdse68.CropMonitoringSystem.service.CropService;
 import lk.ijse.gdse68.CropMonitoringSystem.util.AppUtil;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,6 +25,7 @@ import java.util.List;
 //@CrossOrigin("*")
 @CrossOrigin(origins = "http://127.0.0.1:5500", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH, RequestMethod.OPTIONS})
 public class CropController {
+    static Logger logger = LoggerFactory.getLogger(CropController.class);
 
     @Autowired
     private CropService cropService;
@@ -50,6 +53,7 @@ public class CropController {
             buildCropDTO.setFieldCode(fieldCode);
             buildCropDTO.setLogCode(null);
             cropService.saveCrop(buildCropDTO);
+            logger.info("save crop successfully");
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (DataPersistFailedException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

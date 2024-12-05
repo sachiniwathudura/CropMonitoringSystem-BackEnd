@@ -7,6 +7,8 @@ import lk.ijse.gdse68.CropMonitoringSystem.exception.DataPersistFailedException;
 import lk.ijse.gdse68.CropMonitoringSystem.exception.StaffNotFoundException;
 import lk.ijse.gdse68.CropMonitoringSystem.service.StaffService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,6 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://127.0.0.1:5500", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH, RequestMethod.OPTIONS})
 public class StaffController {
+    static Logger logger = LoggerFactory.getLogger(StaffController.class);
     @Autowired
     private StaffService staffService;
 
@@ -27,6 +30,7 @@ public class StaffController {
     public ResponseEntity<Void> saveStaff(@RequestBody StaffDTO staffDTO) {
         try {
             staffService.saveStaff(staffDTO);
+            logger.info("staff save successfully");
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (DataPersistFailedException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
