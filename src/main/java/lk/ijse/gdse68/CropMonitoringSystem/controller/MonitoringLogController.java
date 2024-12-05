@@ -28,14 +28,16 @@ public class MonitoringLogController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> saveLog(
+            @RequestParam("logCode") String logCode,
             @RequestParam("logDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date logDate,
             @RequestParam("observationDetails")String observationDetails,
             @RequestParam("observedImage") MultipartFile observedImage,
             @RequestParam("fieldCode") String fieldCode
     ){
         try {
-            String base64LogImg = AppUtil.toBase64LogImg(String.valueOf(observedImage));
+            String base64LogImg = AppUtil.toBase64Image(observedImage);
             MonitoringLogDTO saveMonitoringLogDTO = new MonitoringLogDTO();
+            saveMonitoringLogDTO.setLogCode(logCode);
             saveMonitoringLogDTO.setLogDate(logDate);
             saveMonitoringLogDTO.setObservationDetails(observationDetails);
             saveMonitoringLogDTO.setObservedImage(String.valueOf(observedImage));
@@ -58,7 +60,7 @@ public class MonitoringLogController {
             @RequestParam("fieldCode")String fieldCode
     ){
         try {
-            String base64LogImg = AppUtil.toBase64LogImg(String.valueOf(observedImage));
+            String base64LogImg = AppUtil.toBase64Image(observedImage);
             MonitoringLogDTO updateMonitoringLogDTO = new MonitoringLogDTO();
             updateMonitoringLogDTO.setLogDate(logDate);
             updateMonitoringLogDTO.setObservationDetails(observationDetails);
