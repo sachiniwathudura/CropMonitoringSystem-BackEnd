@@ -20,10 +20,7 @@ public class StaffDTO implements SuperDTO, StaffResponse {
     private String gender;
     private LocalDate joinDate;
     private LocalDate dob;
-    private String buildingNo;
-    private String lane;
-    private String city;
-    private String state;
+    private String address;
     private String postalCode;
     private String contactNo;
     private String email;
